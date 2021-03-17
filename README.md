@@ -1,5 +1,5 @@
 # promprox
-A Prometheus metrics proxy to use in a Kubernetes enviroment to reach external applications without hardcording scrape config
+A Prometheus metrics proxy to use in a Kubernetes environment to reach external applications without hardcording scrape config
 
 ## Run on docker
 You can run the proxy on docker with the following command. In this case we use the URL external-proxy-url.example.com:8000 as our remote prometheus metric endpoint.
