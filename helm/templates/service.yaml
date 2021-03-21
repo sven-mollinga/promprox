@@ -1,0 +1,15 @@
+# Service for promprox
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.exporter.name }}-exporter
+  labels:
+    app: {{ .Values.exporter.name }}-exporter
+spec:
+  ports:
+    - name: metrics
+      protocol: TCP
+      port: 9090
+      targetPort: 9090
+  selector:
+    app: {{ .Values.exporter.name }}-exporter

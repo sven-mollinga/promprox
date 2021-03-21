@@ -1,0 +1,18 @@
+# Servicemonitor for promprox
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Values.exporter.name }}-exporter
+  namespace: {{ .Values.exporter.namespace }}
+  labels:
+    app: {{ .Values.exporter.name }}-exporter
+    prometheus: {{ .Values.exporter.prometheus }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.exporter.name }}-exporter
+  namespaceSelector:
+    any: true
+  endpoints:
+  - port: metrics
+    interval: 1m

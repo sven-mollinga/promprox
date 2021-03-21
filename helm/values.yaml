@@ -1,0 +1,12 @@
+exporter:
+  ## Name for the exporter. Used to define the resources on Kubernetes.
+  name: external-proxy
+
+  ## Namespace for all of the Kubernetes resources.
+  namespace: default
+
+  ## Url for upstream prometheus metrics endpoint
+  metricurl: http://external-proxy-url.example.com:8000/metrics
+
+  ## Label used for the autodiscovery with the Prometheus Operator
+  prometheus: app-prometheus

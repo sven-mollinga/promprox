@@ -8,7 +8,7 @@ import os
 prom_metric_url = str(os.environ['METRIC_URL'])
 
 @app.route('/')
-def hello_world():
+def home():
     return 'This it the Prometheus Metric Proxy. Currently in use for url {}. Go to the /metrics path to retrieve the external metrics.'.format(prom_metric_url)
 
 @app.route('/metrics')
