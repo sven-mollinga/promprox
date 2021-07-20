@@ -1,18 +1,23 @@
+{{ $namespace := .Values.namespace}}
+{{ $prometheus := .Values.prometheus}}
+{{- range .Values.exporters }}
+---
 # Servicemonitor for promprox
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ .Values.exporter.name }}-exporter
-  namespace: {{ .Values.exporter.namespace }}
+  name: {{ .name }}-exporter
+  namespace: {{ $namespace }}
   labels:
-    app: {{ .Values.exporter.name }}-exporter
-    prometheus: {{ .Values.exporter.prometheus }}
+    app: {{ .name }}-exporter
+    prometheus: {{ $prometheus }}
 spec:
   selector:
     matchLabels:
-      app: {{ .Values.exporter.name }}-exporter
+      app: {{ .name }}-exporter
   namespaceSelector:
     any: true
   endpoints:
   - port: metrics
     interval: 1m
+{{- end }}
