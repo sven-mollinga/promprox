@@ -1,10 +1,14 @@
+{{ $namespace := .Values.namespace}}
+{{- range .Values.exporters }}
+---
 # Service for promprox
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Values.exporter.name }}-exporter
+  name: {{ .name }}-exporter
+  namespace: {{ $namespace }}
   labels:
-    app: {{ .Values.exporter.name }}-exporter
+    app: {{ .name }}-exporter
 spec:
   ports:
     - name: metrics
@@ -12,4 +16,5 @@ spec:
       port: 9090
       targetPort: 9090
   selector:
-    app: {{ .Values.exporter.name }}-exporter
+    app: {{ .name }}-exporter
+{{- end }}

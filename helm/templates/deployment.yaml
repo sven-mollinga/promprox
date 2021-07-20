@@ -1,25 +1,30 @@
+{{ $namespace := .Values.namespace}}
+{{- range .Values.exporters }}
+---
 # Deployment for promprox
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.exporter.name }}-exporter
+  name: {{ .name }}-exporter
+  namespace: {{ $namespace }}
   labels:
-    app: {{ .Values.exporter.name }}-exporter
+    app: {{ .name }}-exporter
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{ .Values.exporter.name }}-exporter
+      app: {{ .name }}-exporter
   template:
     metadata:
       labels:
-        app: {{ .Values.exporter.name }}-exporter
+        app: {{ .name }}-exporter
     spec:
       containers:
-      - name: {{ .Values.exporter.name }}-exporter
+      - name: {{ .name }}-exporter
         image: svenmollinga/promprox:latest
         ports:
         - containerPort: 9090
         env:
         - name: METRIC_URL
-          value: "{{ .Values.exporter.metricurl }}"
+          value: "{{ .metricurl }}"
+{{- end }}
