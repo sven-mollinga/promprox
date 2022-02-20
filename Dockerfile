@@ -4,7 +4,7 @@
 #
 
 # Use Python base image
-FROM python:3.9.2-alpine3.13
+FROM python:3.10.2-alpine3.15
 
 COPY . .
 
