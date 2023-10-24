@@ -1,14 +1,21 @@
 #!/usr/bin/python3
-"""This python scripts reads an external prometheus metrics page and
-makes it available within the kubernetes cluster itself. This is perfect
-for a setup where you don't want to hardcode your prometheus targets"""
+"""This python scripts reads an external Prometheus metrics page and
+makes it available within the Kubernetes cluster itself. This is perfect
+for a setup where you don't want to hardcode your Prometheus targets"""
 import os
+import json
 import requests
 from flask import Flask
 
 APP = Flask(__name__)
-PROM_METRIC_URL = str(os.environ["METRIC_URL"])
 
+if "METRIC_URL" in os.environ:
+    PROM_METRIC_URL = str(os.environ["METRIC_URL"])
+else:
+    print("Please set the METRIC_URL environmental variable")
+
+if "PROM_HEADER" in os.environ:
+    PROM_HEADER = str(os.environ["PROM_HEADER"])
 
 @APP.route("/")
 def home():
@@ -20,10 +27,17 @@ def home():
 @APP.route("/metrics")
 def get_metrics():
     """This function requests the external url and returns the output."""
-    response = requests.get(PROM_METRIC_URL)
+    source = requests.Session()
+
+    if 'PROM_HEADER' in globals():
+        header = json.loads(PROM_HEADER)
+        source.headers.update(header)
+
+    response = source.get(PROM_METRIC_URL)
+
     if response.status_code == 200:
         return response.content.decode("utf-8")
-    return "Not Found"
+    return response.status_code
 
 
 if __name__ == "__main__":
