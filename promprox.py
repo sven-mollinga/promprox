@@ -13,10 +13,8 @@ PROM_METRIC_URL = str(os.environ["METRIC_URL"])
 @APP.route("/")
 def home():
     """This function returns the main page output."""
-    return """This it the Prometheus Metric Proxy. Currently in use for url {}.
-    Go to the /metrics path to retrieve the external metrics.""".format(
-        PROM_METRIC_URL
-    )
+    return f"""This it the Prometheus Metric Proxy. Currently in use for url {PROM_METRIC_URL}.
+    Go to the /metrics path to retrieve the external metrics."""
 
 
 @APP.route("/metrics")
